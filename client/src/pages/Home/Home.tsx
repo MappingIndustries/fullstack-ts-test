@@ -9,7 +9,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 
 export default function Home() {
   const [selectedBreed, setSelectedBreed] = useState<string>("");
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
   const [imagesList, setImagesList] = useState<string[]>([]);
   const [error, setError] = useState<string>("");
 
@@ -21,6 +21,8 @@ export default function Home() {
   }) => {
     setSelectedBreed(event.target.value);
     setError("");
+    setImage("");
+    setImagesList([]);
   };
   const handleSelectRandom = () => {
     if (selectedBreed === "") {
@@ -69,13 +71,15 @@ export default function Home() {
         {selectedBreed && <p>You selected: {selectedBreed}</p>}
       </div>
       <div>
-        <button onClick={handleSelectRandom}>Select random</button>
+        <button onClick={handleSelectRandom}>Random</button>
         or
-        <button onClick={handleSelectAll}>Select all of the breed</button>
+        <button onClick={handleSelectAll}>A ll of the breed</button>
       </div>
+      {error && <S.Error>{error}</S.Error>}
+      {stateError && <S.Error>{stateError}</S.Error>}
       {image && (
         <S.ImageContainer>
-          <S.RandomImage src={image} alt="doggy" />
+          <S.RandomImage src={image} alt="broken image" />
           <S.Button
             onClick={() =>
               dispatch(addToFavorite({ image: image, breed: selectedBreed }))
@@ -85,9 +89,6 @@ export default function Home() {
           </S.Button>
         </S.ImageContainer>
       )}
-
-      {error && <S.Error>{error}</S.Error>}
-      {stateError && <S.Error>{stateError}</S.Error>}
       {imagesList && (
         <div>
           {imagesList.map((image, index) => (
