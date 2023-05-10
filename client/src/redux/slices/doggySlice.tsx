@@ -53,43 +53,42 @@ const dogSlice = createSlice({
       return { ...initialState };
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(addToFavorite.pending, (state: IState) => {
-        state.loading = true;
-      })
-      .addCase(addToFavorite.fulfilled, (state: IState, action) => {
-        state.loading = false;
-        state.error = "";
-        state.favorites?.push(action.payload);
-      })
-      .addCase(addToFavorite.rejected, (state: IState, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
-      .addCase(seeAllFavorites.pending, (state: IState) => {
-        state.loading = true;
-      })
-      .addCase(seeAllFavorites.fulfilled, (state: IState, action) => {
-        state.loading = false;
-        state.error = "";
-        state.favorites = action.payload.favorites;
-      })
-      .addCase(seeAllFavorites.rejected, (state: IState, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
-      .addCase(deleteFavorite.pending, (state: IState) => {
-        state.loading = true;
-      })
-      .addCase(deleteFavorite.fulfilled, (state: IState, action) => {
-        state.loading = false;
-        state.error = "";
-
-        state.favorites = state.favorites.filter(
-          (favorite) => favorite._id !== action.payload._id
-        );
-      });
+  extraReducers: {
+    [addToFavorite.pending.toString()]: (state: IState) => {
+      state.loading = true;
+    },
+    [addToFavorite.fulfilled.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = "";
+      state.favorites?.push(action.payload);
+    },
+    [addToFavorite.rejected.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [seeAllFavorites.pending.toString()]: (state: IState) => {
+      state.loading = true;
+    },
+    [seeAllFavorites.fulfilled.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = "";
+      state.favorites = action.payload.favorites;
+    },
+    [seeAllFavorites.rejected.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [deleteFavorite.pending.toString()]: (state: IState, action) => {
+      state.loading = true;
+      state.error = action.payload.message;
+    },
+    [deleteFavorite.fulfilled.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = "";
+      state.favorites = state.favorites.filter(
+        (favorite) => favorite._id !== action.payload._id
+      );
+    },
   },
 });
 export const { cleanStore } = dogSlice.actions;

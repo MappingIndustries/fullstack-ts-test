@@ -76,7 +76,7 @@ export default function Home() {
       </div>
       {image && (
         <S.ImageContainer>
-          <img src={image} alt="doggy" />
+          <S.RandomImage src={image} alt="doggy" />
           <S.Button
             onClick={() =>
               dispatch(addToFavorite({ image: image, breed: selectedBreed }))

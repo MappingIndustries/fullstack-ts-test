@@ -13,6 +13,11 @@ export const ListImage = styled.img`
   width: 150px;
   margin: 10px;
 `;
+export const RandomImage = styled.img`
+  height: 250px;
+  width: 250px;
+  margin: 10px;
+`;
 export const Error = styled.p`
   color: red;
 `;
