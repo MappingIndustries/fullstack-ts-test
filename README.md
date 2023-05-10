@@ -11,9 +11,12 @@ MONGO_USERNAME=`<username>`
 MONGO_PASSWORD=`<password>`
 SERVER_PORT=`<port>`
 
-6. cd client
-7. npm i
-8. npm start
+6. rm -rf build/ && ts
+7. node build/server.js
+
+8. cd client
+9. npm i
+10. npm start
 
 This will start the server and client applications concurrently, allowing you to interact with the project.
 
