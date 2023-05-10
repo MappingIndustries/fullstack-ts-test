@@ -1,19 +1,19 @@
 To run the project:
 
-cd server
-npm i
-touch .env
-code .
+1. cd server
+2. npm i
+3. touch .env
+4. code .env
 
-Add the following environment variables to the `.env` file, replacing `<username>`, `<password>`, and `<port>` with your own values:
+5. Add the following environment variables to the `.env` file, replacing `<username>`, `<password>`, and `<port>` with your own values:
 
-MONGO_USERNAME=<usename>
-MONGO_PASSWORD=<password>
-SERVER_PORT=<port>
+MONGO_USERNAME=`<username>`
+MONGO_PASSWORD=`<password>`
+SERVER_PORT=`<port>`
 
-cd client
-npm i
-npm start
+6. cd client
+7. npm i
+8. npm start
 
 This will start the server and client applications concurrently, allowing you to interact with the project.
 
