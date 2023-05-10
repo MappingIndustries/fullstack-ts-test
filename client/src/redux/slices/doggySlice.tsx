@@ -4,6 +4,7 @@ import * as api from "../api";
 
 const initialState: IState = {
   favorites: [],
+  filteredFavorites: [],
   error: "",
   loading: false,
 };
@@ -28,6 +29,17 @@ export const seeAllFavorites = createAsyncThunk("/favorites", async () => {
     throw new Error(err.message);
   }
 });
+export const seeFavoritesByBreed = createAsyncThunk(
+  "/favorites/breed",
+  async (breed: string, { rejectWithValue }) => {
+    try {
+      const response = await api.fetchFavoritesByBreed(breed);
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const deleteFavorite = createAsyncThunk(
   "/delete/",
@@ -73,6 +85,7 @@ const dogSlice = createSlice({
       state.loading = false;
       state.error = "";
       state.favorites = action.payload.favorites;
+      state.filteredFavorites = [];
     },
     [seeAllFavorites.rejected.toString()]: (state: IState, action) => {
       state.loading = false;
@@ -88,6 +101,19 @@ const dogSlice = createSlice({
       state.favorites = state.favorites.filter(
         (favorite) => favorite._id !== action.payload._id
       );
+    },
+    [seeFavoritesByBreed.pending.toString()]: (state: IState) => {
+      state.loading = true;
+      state.filteredFavorites = [];
+    },
+    [seeFavoritesByBreed.fulfilled.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = "";
+      state.filteredFavorites = action.payload.favorites;
+    },
+    [seeFavoritesByBreed.rejected.toString()]: (state: IState, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
     },
   },
 });

@@ -6,6 +6,7 @@ export interface IDog {
 
 export interface IState {
   favorites: IDog[];
+  filteredFavorites: [];
   error: string | undefined;
   loading: boolean;
 }

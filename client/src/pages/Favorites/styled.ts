@@ -21,3 +21,6 @@ export const Button = styled.button`
   left: 0;
   z-index: 1;
 `;
+export const Error = styled.p`
+  color: red;
+`;

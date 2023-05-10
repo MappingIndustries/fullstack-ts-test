@@ -14,7 +14,6 @@ export default function Home() {
   const [error, setError] = useState<string>("");
 
   const stateError = useSelector((state: IState) => state.error);
-
   const dispatch: ThunkDispatch<IState, void, any> = useDispatch();
 
   const handleBreedChange = (event: {
