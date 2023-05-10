@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Dog_1 = __importDefault(require("../models/Dog"));
+const types_1 = require("../types");
 const addToFavorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { image, breed } = req.body;
     try {
@@ -42,6 +43,26 @@ const seeAllFavorites = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ error });
     }
 });
+const getFavoritesByBreed = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const breed = req.query.breed;
+    try {
+        const favorites = yield Dog_1.default.find({ breed });
+        if (favorites.length === 0) {
+            return res
+                .status(409)
+                .json({ message: "No favorites found for the given breed." });
+        }
+        else if (!types_1.breeds.includes(breed)) {
+            return res
+                .status(400)
+                .json({ error: "Please choose a breed from the list." });
+        }
+        res.status(200).json({ favorites });
+    }
+    catch (error) {
+        res.status(500).json({ error });
+    }
+});
 const deleteFavorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
@@ -59,4 +80,5 @@ exports.default = {
     addToFavorite,
     seeAllFavorites,
     deleteFavorite,
+    getFavoritesByBreed,
 };

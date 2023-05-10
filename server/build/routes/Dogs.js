@@ -8,4 +8,5 @@ const router = express_1.default.Router();
 router.get("/favorites", Dog_1.default.seeAllFavorites);
 router.post("/newFavorite", Dog_1.default.addToFavorite);
 router.delete("/delete/:id", Dog_1.default.deleteFavorite);
+router.get("/favorites/breed", Dog_1.default.getFavoritesByBreed);
 module.exports = router;

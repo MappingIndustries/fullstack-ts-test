@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import Dog from "../models/Dog";
+import { breeds } from "../types";
 
 const addToFavorite = async (req: Request, res: Response) => {
   const { image, breed } = req.body;
@@ -35,6 +36,22 @@ const seeAllFavorites = async (req: Request, res: Response) => {
     res.status(500).json({ error });
   }
 };
+const getFavoritesByBreed = async (req: Request, res: Response) => {
+  const breed = req.query.breed as string;
+
+  try {
+    const favorites = await Dog.find({ breed });
+
+    if (favorites.length === 0) {
+      return res
+        .status(409)
+        .json({ message: "No favorites found for the given breed." });
+    }
+    res.status(200).json({ favorites });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
 
 const deleteFavorite = async (req: Request, res: Response) => {
   try {
@@ -56,4 +73,5 @@ export default {
   addToFavorite,
   seeAllFavorites,
   deleteFavorite,
+  getFavoritesByBreed,
 };
