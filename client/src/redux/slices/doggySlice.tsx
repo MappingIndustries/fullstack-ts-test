@@ -30,7 +30,7 @@ export const seeAllFavorites = createAsyncThunk("/favorites", async () => {
 });
 
 export const deleteFavorite = createAsyncThunk(
-  "/deletea/",
+  "/delete/",
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await api.deleteUser(id);
@@ -80,7 +80,7 @@ const dogSlice = createSlice({
     },
     [deleteFavorite.pending.toString()]: (state: IState, action) => {
       state.loading = true;
-      state.error = action.payload.message;
+      state.error = "";
     },
     [deleteFavorite.fulfilled.toString()]: (state: IState, action) => {
       state.loading = false;
