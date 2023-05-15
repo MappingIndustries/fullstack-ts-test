@@ -11,7 +11,7 @@ MONGO_USERNAME=`<username>`
 MONGO_PASSWORD=`<password>`
 SERVER_PORT=`<port>`
 
-6. rm -rf build/ && ts
+6. rm -rf build/ && tsc
 7. node build/server.js
 
 8. cd client
