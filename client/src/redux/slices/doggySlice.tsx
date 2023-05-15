@@ -10,7 +10,7 @@ const initialState: IState = {
 };
 
 export const addToFavorite = createAsyncThunk(
-  "/newFavorites",
+  "/newFavorite",
   async (item: { breed: string; image: string }, { rejectWithValue }) => {
     try {
       const response = await api.addToFavorite(item);
