@@ -1,0 +1,43 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: yourpassword
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - books-network
+
+  server:
+    build:
+      context: ../server
+      dockerfile: dockerfile.dev
+    volumes:
+      - ../server:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+    networks:
+      - books-network
+
+  client:
+    build:
+      context: ../client
+      dockerfile: dockerfile.dev
+    volumes:
+      - ../client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '9000:9000'
+    networks:
+      - books-network
+
+networks:
+    books-network:
+
