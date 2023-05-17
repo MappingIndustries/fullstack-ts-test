@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   db:
     image: postgres
@@ -11,11 +11,18 @@ services:
       - '5432:5432'
     networks:
       - books-network
+  
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - books-network
 
   server:
     build:
       context: ../server
-      dockerfile: dockerfile.dev
+      dockerfile: Dockerfile.dev
     volumes:
       - ../server:/usr/src/app
       - /usr/src/app/node_modules
@@ -23,13 +30,14 @@ services:
       - '5000:5000'
     depends_on:
       - db
+      - redis
     networks:
       - books-network
 
   client:
     build:
       context: ../client
-      dockerfile: dockerfile.dev
+      dockerfile: Dockerfile.dev
     volumes:
       - ../client:/usr/src/app
       - /usr/src/app/node_modules
@@ -39,5 +47,4 @@ services:
       - books-network
 
 networks:
-    books-network:
-
+  books-network:
