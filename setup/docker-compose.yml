@@ -4,25 +4,27 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: quotes_db
     volumes:
       - ./data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
     networks:
-      - books-network
+      - app-network
   
   redis:
     image: redis
     ports:
       - '6379:6379'
     networks:
-      - books-network
+      - app-network
 
   server:
     build:
       context: ../server
-      dockerfile: Dockerfile.dev
     volumes:
       - ../server:/usr/src/app
       - /usr/src/app/node_modules
@@ -32,19 +34,18 @@ services:
       - db
       - redis
     networks:
-      - books-network
+      - app-network
 
   client:
     build:
       context: ../client
-      dockerfile: Dockerfile.dev
     volumes:
       - ../client:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '9000:9000'
     networks:
-      - books-network
+      - app-network
 
 networks:
-  books-network:
+  app-network:
