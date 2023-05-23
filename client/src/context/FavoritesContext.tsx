@@ -1,4 +1,3 @@
-// FavoritesContext.tsx
 import React, { createContext, useState, useEffect, PropsWithChildren } from 'react';
 import { QuoteType } from '../models/Quote';
 import { addFavoriteQuote, getUserFavorites, getQuoteById, removeFavoriteQuote } from '../api/favoritesApi';
@@ -44,12 +43,9 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
         }
     };
 
-
     const isFavorite = (quoteId: string) => {
         return favorites.some(favorite => favorite._id === quoteId);
     };
-
-
 
     useEffect(() => {
         const loadFavorites = async () => {
@@ -67,7 +63,3 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
         </FavoritesContext.Provider>
     );
 };
-
-
-
-
