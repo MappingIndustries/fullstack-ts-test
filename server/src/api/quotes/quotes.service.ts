@@ -6,16 +6,10 @@ export const getQuoteById = async (id: string) => {
   let quote = await redisClient.get(id);
 
   if (quote) {
-    // Quote was in Redis, parse it and log a message
     quote = JSON.parse(quote);
-    console.log(`Quote ${id} retrieved from Redis:`, quote);
   } else {
-    // Quote was not in Redis, get it from the API
     const response = await api.get(`/quotes/${id}`);
     quote = response.data;
-    console.log(`Quote ${id} retrieved from API:`, quote);
-
-    // Save the quote to Redis for next time
     await redisClient.set(id, JSON.stringify(quote));
   }
 
@@ -53,7 +47,6 @@ export const deleteFavorite = async (userId: string, quoteId: string) => {
       'DELETE FROM user_favorites WHERE user_id = $1 AND quote_id = $2',
       [userId, quoteId]
     );
-    console.log(`Favorite quote ${quoteId} deleted for user ${userId}`);
   } catch (error) {
     console.error(
       `Could not delete favorite quote ${quoteId} for user ${userId}:`,
@@ -76,11 +69,9 @@ export const getFavorites = async (userId: string) => {
 
     if (quote) {
       quote = JSON.parse(quote);
-      console.log(`Quote ${quote_id} retrieved from Redis:`, quote);
     } else {
       const response = await api.get(`/quotes/${quote_id}`);
       quote = response.data;
-      console.log(`Quote ${quote_id} retrieved from API:`, quote);
 
       await redisClient.set(quote_id, JSON.stringify(quote));
     }
