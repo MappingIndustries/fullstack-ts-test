@@ -59,7 +59,7 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
         };
 
         loadFavorites();
-    }, []);
+    }, [addFavorite, removeFavorite]);
 
     return (
         <FavoritesContext.Provider value={{ favorites, setFavorites, addFavorite, removeFavorite, isFavorite }}>

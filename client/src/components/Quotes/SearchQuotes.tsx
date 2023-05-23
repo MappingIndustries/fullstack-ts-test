@@ -1,39 +1,36 @@
 import React, { useContext, useState } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
-import { searchQuotes, addFavoriteQuote, removeFavoriteQuote } from '../../api/favoritesApi';
+import { addFavoriteQuote, removeFavoriteQuote } from '../../api/favoritesApi';
 import { QuoteType } from '../../models/Quote';
+import { useSearch } from '../../hooks/useSearch';
 
 export const SearchQuotes: React.FC = () => {
-    const { favorites, addFavorite } = useContext(FavoritesContext);
+    const { favorites, addFavorite, removeFavorite } = useContext(FavoritesContext);
     const [searchTerm, setSearchTerm] = useState('');
-    const [quotes, setQuotes] = useState([]);
+    const { quotes, search } = useSearch();
 
-    const search = async (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
-        const results = await searchQuotes(searchTerm);
-        setQuotes(results);
+        search(searchTerm);
     };
 
     const isFavorite = (quoteId: string) => {
         return favorites.some((quote: QuoteType) => quote._id === quoteId);
     };
+
     const handleFavorite = async (quoteId: string) => {
         if (isFavorite(quoteId)) {
             await removeFavoriteQuote('4', quoteId);
+            removeFavorite('4', quoteId);
         } else {
             await addFavoriteQuote('4', quoteId);
+            addFavorite('4', quoteId);
         }
-
-        const results = await searchQuotes(searchTerm);
-        setQuotes(results);
     };
-
-    console.log('quotes', quotes)
 
     return (
         <div>
-            <form onSubmit={search}>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={searchTerm}
@@ -51,9 +48,6 @@ export const SearchQuotes: React.FC = () => {
                     </button>
                 </div>
             ))}
-
-
         </div>
     );
 };
-
