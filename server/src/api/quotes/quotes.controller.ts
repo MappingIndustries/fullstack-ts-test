@@ -9,6 +9,17 @@ declare global {
   }
 }
 
+export const getQuoteById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const quote = await QuotesService.getQuoteById(id);
+    res.json(quote);
+  } catch (err: any) {
+    res.status(500).send(err.message);
+  }
+};
+
 export const searchQuotes = async (req: Request, res: Response) => {
   const { query } = req.query;
 
@@ -22,11 +33,24 @@ export const searchQuotes = async (req: Request, res: Response) => {
 
 export const addFavorite = async (req: Request, res: Response) => {
   const userId = req.userId;
+  console.log('userId', userId);
   const { quoteId } = req.body;
 
   try {
     await QuotesService.addFavorite(userId, quoteId);
     res.status(201).send();
+  } catch (err: any) {
+    res.status(500).send(err.message);
+  }
+};
+
+export const deleteFavorite = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    await QuotesService.deleteFavorite(userId, id);
+    res.status(200).send();
   } catch (err: any) {
     res.status(500).send(err.message);
   }
