@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Login from '../components/Auth/Login';
+import Register from '../components/Auth/Register';
 
 const Home: React.FC = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -7,8 +7,8 @@ const Home: React.FC = () => {
     return (
         <div>
             <h1>Welcome to our website!</h1>
-            <button onClick={() => setShowLogin(true)}>Login</button>
-            {showLogin && <Login />}
+            <button onClick={() => setShowLogin(true)}>Register</button>
+            {showLogin && <Register />}
         </div>
     );
 };

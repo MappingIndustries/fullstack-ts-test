@@ -18,6 +18,21 @@ export const register = async (username: string, password: string) => {
     username,
     hashedPassword,
   ]);
+
+  const result = await pool.query(
+    'SELECT id FROM users WHERE username = $1',
+    [username]
+  );
+
+  const accessToken = generateAccessToken(result.rows[0].id);
+  const refreshToken = generateRefreshToken(result.rows[0].id);
+
+  await pool.query(
+    'INSERT INTO web_sessions (user_id, token) VALUES ($1, $2)', 
+    [result.rows[0].id, refreshToken]
+  );
+
+  return { accessToken, refreshToken };
 };
 
 export const login = async (username: string, password: string) => {
@@ -25,11 +40,11 @@ export const login = async (username: string, password: string) => {
     username,
   ]);
 
-  const user = result.rows[0];
-
-  if (!user) {
+  if(result.rows.length === 0) {
     throw new Error('User not found');
   }
+
+  const user = result.rows[0];
 
   const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -40,5 +55,12 @@ export const login = async (username: string, password: string) => {
   const accessToken = generateAccessToken(user.id);
   const refreshToken = generateRefreshToken(user.id);
 
-  return { accessToken, refreshToken };
+  const user_id = user.id;
+
+  await pool.query(
+    'INSERT INTO web_sessions (token, user_id) VALUES ($1, $2)',
+    [accessToken, user_id]
+  );
+
+  return { user };
 };

@@ -5,8 +5,7 @@
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "./"],
-    "types": ["express"]
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": ["src/**/*.ts", "express.d.ts"],
   "exclude": ["node_modules"]

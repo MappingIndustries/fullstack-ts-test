@@ -1,39 +1,37 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-export const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-
-export const refreshToken = async (): Promise<void> => {
-  const refreshToken = localStorage.getItem('refreshToken')
-  const response = await api.post('/auth/token', {
-    token: refreshToken,
-  })
-  localStorage.setItem('accessToken', response.data.accessToken)
-}
+const BASE_URL = 'http://localhost:5000/api'
 
 export const ensureAuthenticatedRequest = async (
   url: string,
-  options: AxiosRequestConfig = {},
-): Promise<AxiosResponse<any>> => {
-  let accessToken = localStorage.getItem('accessToken')
+  config?: AxiosRequestConfig,
+): Promise<AxiosResponse> => {
+  const token = localStorage.getItem('accessToken')
 
-  if (!accessToken) {
-    await refreshToken()
-    accessToken = localStorage.getItem('accessToken')
+  if (!token) {
+    throw new Error('Access token is missing.')
   }
 
-  const response = await api({
-    ...options,
-    url,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  }
 
-  return response
+  const requestConfig: AxiosRequestConfig = {
+    ...config,
+    headers: {
+      ...config?.headers,
+      ...headers,
+    },
+  }
+
+  try {
+    const response = await axios.request({
+      ...requestConfig,
+      url: `${BASE_URL}${url}`,
+    })
+    return response
+  } catch (error: any) {
+    throw new Error(`Request failed: ${error.message}`)
+  }
 }

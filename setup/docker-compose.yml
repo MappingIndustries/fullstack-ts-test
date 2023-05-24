@@ -43,7 +43,7 @@ services:
       - ../client:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - '9000:9000'
+      - '9001:9001'
     networks:
       - app-network
 

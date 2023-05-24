@@ -1,6 +1,8 @@
-import React, { createContext, useState, useEffect, PropsWithChildren } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { QuoteType } from '../models/Quote';
 import { addFavoriteQuote, getUserFavorites, getQuoteById, removeFavoriteQuote } from '../api/favoritesApi';
+import { getUserIdFromToken } from '../utils/authUtils';
+
 
 interface FavoritesContextProps {
     favorites: QuoteType[];
@@ -21,7 +23,7 @@ export const FavoritesContext = createContext<FavoritesContextProps>({
 export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     const [favorites, setFavorites] = useState<QuoteType[]>([]);
 
-    const addFavorite = async (userId: string, quoteId: string) => {
+    const addFavorite = async (userId: string, quoteId: string,) => {
         try {
             await addFavoriteQuote(userId, quoteId);
             const quote = await getQuoteById(quoteId);
@@ -33,8 +35,10 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
 
     const removeFavorite = async (userId: string, quoteId: string) => {
         try {
-            await removeFavoriteQuote('4', quoteId);
-            setFavorites((prevFavorites) => prevFavorites.filter((quote) => quote._id !== quoteId));
+            await removeFavoriteQuote(userId, quoteId);
+            setFavorites((prevFavorites) =>
+                prevFavorites.filter((quote) => quote._id !== quoteId)
+            );
         } catch (error) {
             console.error('Could not remove favorite:', error);
         }
@@ -45,14 +49,25 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
     };
 
     useEffect(() => {
-        const loadFavorites = async () => {
-            const userId = '4';
-            const favorites = await getUserFavorites(userId);
-            setFavorites(favorites);
+        const fetchFavorites = async () => {
+            try {
+                const favorites = await getUserFavorites();
+                setFavorites(favorites);
+            } catch (error) {
+                console.error('Failed to fetch favorites:', error);
+            }
         };
 
-        loadFavorites();
-    }, [addFavorite, removeFavorite]);
+        fetchFavorites();
+    }, []);
+
+    const getUserId = () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            return null;
+        }
+        return getUserIdFromToken(token);
+    };
 
     return (
         <FavoritesContext.Provider value={{ favorites, setFavorites, addFavorite, removeFavorite, isFavorite }}>

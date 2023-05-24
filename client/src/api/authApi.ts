@@ -8,6 +8,15 @@ export const login = async (username: string, password: string) => {
   localStorage.setItem('refreshToken', response.data.refreshToken)
 }
 
+export const register = async (username: string, password: string) => {
+  const response = await axios.post(`${BASE_URL}/register`, {
+    username,
+    password,
+  })
+  localStorage.setItem('accessToken', response.data.accessToken)
+  localStorage.setItem('refreshToken', response.data.refreshToken)
+}
+
 export const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken')
   const response = await axios.post(`${BASE_URL}/token`, {

@@ -2,6 +2,7 @@ import api from '../../utils/axios';
 import redisClient from '../../config/cache';
 
 export const getQuoteById = async (id: string) => {
+ 
   let quote = await redisClient.get(id);
 
   if (quote) {

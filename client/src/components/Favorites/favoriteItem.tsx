@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { QuoteType } from '../../models/Quote';
 
-interface FavoriteItemProps {
+type FavoriteItemProps = {
     quote: QuoteType;
     onFavorite: (quoteId: string) => void;
 }

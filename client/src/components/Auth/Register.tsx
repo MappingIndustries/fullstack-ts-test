@@ -1,9 +1,8 @@
-// src/components/auth/Login.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../api/authApi';
+import { register } from '../../api/authApi';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +11,7 @@ const Login: React.FC = () => {
         event.preventDefault();
 
         try {
-            await login(username, password);
+            await register(username, password);
             navigate('/quotes');
         } catch (error) {
             console.error(`Login failed: ${error}`);
@@ -21,7 +20,7 @@ const Login: React.FC = () => {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -35,10 +34,10 @@ const Login: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                 />
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default Register;
