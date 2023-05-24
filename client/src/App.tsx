@@ -1,18 +1,17 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { SearchQuotes } from './components/Quotes/SearchQuotes';
-import { Favorites } from './components/Favorites/Favorites';
+import { routes } from './routes';
 
-const App: React.FC = () => {
+function App() {
     return (
-        <FavoritesProvider>
-            <div className="App">
-                <h1>My Favorite Quotes</h1>
-                <SearchQuotes />
-                <Favorites />
-            </div>
-        </FavoritesProvider>
+        <BrowserRouter>
+            <Routes>
+                {routes.map((route, i) => (
+                    <Route key={i} path={route.path} element={route.element} />
+                ))}
+            </Routes>
+        </BrowserRouter>
     );
-};
+}
 
 export default App;

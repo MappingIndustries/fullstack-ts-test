@@ -1,5 +1,20 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+);
+
 CREATE TABLE IF NOT EXISTS user_favorites (
-  user_id VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL,
   quote_id VARCHAR(255) NOT NULL,
-  PRIMARY KEY (user_id, quote_id)
+  PRIMARY KEY (user_id, quote_id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS web_sessions (
+  user_id VARCHAR(255) NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id, token),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

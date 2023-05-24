@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { FavoritesContext } from '../../context/FavoritesContext';
+import React from 'react';
 import { QuoteType } from '../../models/Quote';
 import { FavoriteItem } from './favoriteItem';
 import { useFavorites } from '../../hooks/useFavorites';

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { FavoritesContext } from '../../context/FavoritesContext';
-import { addFavoriteQuote, removeFavoriteQuote } from '../../api/favoritesApi';
-import { QuoteType } from '../../models/Quote';
-import { useSearch } from '../../hooks/useSearch';
+import { FavoritesContext } from '../context/FavoritesContext';
+import { addFavoriteQuote, removeFavoriteQuote } from '../api/favoritesApi';
+import { QuoteType } from '../models/Quote';
+import { useSearch } from '../hooks/useSearch';
 
 export const SearchQuotes: React.FC = () => {
     const { favorites, addFavorite, removeFavorite } = useContext(FavoritesContext);

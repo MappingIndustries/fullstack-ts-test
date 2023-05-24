@@ -24,9 +24,7 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
     const addFavorite = async (userId: string, quoteId: string) => {
         try {
             await addFavoriteQuote(userId, quoteId);
-
             const quote = await getQuoteById(quoteId);
-
             setFavorites((prevFavorites) => [...prevFavorites, quote]);
         } catch (error) {
             console.error('Could not add favorite:', error);
@@ -36,7 +34,6 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({ child
     const removeFavorite = async (userId: string, quoteId: string) => {
         try {
             await removeFavoriteQuote('4', quoteId);
-
             setFavorites((prevFavorites) => prevFavorites.filter((quote) => quote._id !== quoteId));
         } catch (error) {
             console.error('Could not remove favorite:', error);
