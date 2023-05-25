@@ -47,7 +47,7 @@ export const Register: React.FC = () => {
         }
 
         if (password.trim() === '') {
-            setErrorMessage('Password is required');
+            setErrorMessage('Valid Password is required. Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character');
             return false;
         }
 
