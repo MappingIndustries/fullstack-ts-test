@@ -4,15 +4,15 @@ interface GenericMessageProps {
     message: string;
 }
 
-const GenericMessage: React.FC<GenericMessageProps> = ({ message }) => {
+const GenericMessage: React.FC<GenericMessageProps> = ({ message }: GenericMessageProps) => {
     if (!message) {
         return null;
     }
 
     return (
-        <div className="">
+        <div className="alert alert-info" role="alert">
             {message}
-        </div>
+        </div >
     );
 }
 

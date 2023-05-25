@@ -4,13 +4,13 @@ interface ErrorMessageProps {
     message: string;
 }
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }: ErrorMessageProps) => {
     if (!message) {
         return null;
     }
 
     return (
-        <div className="errorMessage">
+        <div className="alert alert-warning" role="alert">
             {message}
         </div>
     );

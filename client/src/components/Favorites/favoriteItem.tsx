@@ -7,15 +7,15 @@ type FavoriteItemProps = {
     onFavorite: (quoteId: string) => void;
 }
 
-export const FavoriteItem: React.FC<FavoriteItemProps> = ({ quote, onFavorite }) => {
+export const FavoriteItem: React.FC<FavoriteItemProps> = ({ quote, onFavorite }: FavoriteItemProps) => {
     const { isFavorite } = useContext(FavoritesContext);
     const isQuoteFavorite = isFavorite(quote._id);
 
     return (
-        <li key={quote._id}>
+        <li className="list-group-item">
             <p>{quote.content}</p>
             <p>- {quote.author}</p>
-            <button onClick={() => onFavorite(quote._id)}>
+            <button className="btn btn-primary" onClick={() => onFavorite(quote._id)}>
                 {isQuoteFavorite ? 'Unfavorite' : 'Favorite'}
             </button>
         </li>

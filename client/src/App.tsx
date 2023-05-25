@@ -6,7 +6,7 @@ import { FavoritesProvider } from './context/FavoritesContext';
 
 function App() {
     return (
-        <>
+        <div className='container'>
             <AuthProvider>
                 <FavoritesProvider>
                     <BrowserRouter>
@@ -18,7 +18,7 @@ function App() {
                     </BrowserRouter>
                 </FavoritesProvider>
             </AuthProvider >
-        </>
+        </div>
     );
 }
 

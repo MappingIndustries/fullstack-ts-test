@@ -18,7 +18,7 @@ interface ApiError {
     errors?: ValidationError[];
 }
 
-const Register: React.FC = () => {
+export const Register: React.FC = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -78,26 +78,30 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='col-md-6 offset-md-3 mt-5'>
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
-                />
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                <button type="submit">Register</button>
-                <ErrorMessage message={errorMessage} />
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username"
+                    />
+                </div>
+                <div className="mb-3">
+                    <input
+                        type="password"
+                        className="form-control"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                    />
+                </div>
+                <button className="btn btn-primary" type="submit">Register</button>
+                {errorMessage && <ErrorMessage message={errorMessage} />}
             </form>
         </div>
     );
 };
-
-export default Register;
