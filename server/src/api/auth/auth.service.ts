@@ -36,33 +36,3 @@ export const register = async (user: User) => {
 
   return { accessToken, refreshToken };
 };
-
-export const login = async (username: string, password: string) => {
-  const result = await pool.query('SELECT * FROM users WHERE username = $1', [
-    username,
-  ]);
-
-  if (result.rows.length === 0) {
-    throw new Error('User not found');
-  }
-
-  const user = result.rows[0];
-
-  const passwordMatch = await bcrypt.compare(password, user.password);
-
-  if (!passwordMatch) {
-    throw new Error('Invalid credentials');
-  }
-
-  const accessToken = generateAccessToken(user.id);
-  const refreshToken = generateRefreshToken(user.id);
-
-  const user_id = user.id;
-
-  await pool.query(
-    'INSERT INTO web_sessions (token, user_id) VALUES ($1, $2)',
-    [accessToken, user_id]
-  );
-
-  return { user };
-};

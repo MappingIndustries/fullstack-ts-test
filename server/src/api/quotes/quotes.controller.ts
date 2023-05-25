@@ -12,8 +12,6 @@ declare global {
 export const getQuoteById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  console.log('id', id);
-
   try {
     const quote = await QuotesService.getQuoteById(id);
     res.json(quote);

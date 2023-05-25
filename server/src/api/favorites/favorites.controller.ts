@@ -21,8 +21,6 @@ export const addFavorite = async (req: Request, res: Response) => {
 
 export const deleteFavorite = async (req: Request, res: Response) => {
   const user = (req as ExtendedRequest).user;
-  console.log(req.params)
-
   const quoteId = req.params.id
 
   try {
@@ -39,7 +37,6 @@ export const deleteFavorite = async (req: Request, res: Response) => {
 
 export const getFavorites = async (req: Request, res: Response) => {
   const user = (req as ExtendedRequest).user;
-  console.log('userId', user);
 
   try {
    if(user) { 

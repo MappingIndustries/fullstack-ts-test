@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { register, login } from './auth.service';
-import { UserPayload } from '../../types/express';
+import { register } from './auth.service';
 
 import { CreateUserDto } from '../../dtos/users.dto';
 import { validate } from 'class-validator';
@@ -32,16 +31,5 @@ export const registerUser = async (req: Request, res: Response) => {
     } else {
       res.status(500).json({ message: { error: 'Internal Server Error' } });
     }
-  }
-};
-
-export const loginUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-
-  try {
-    const existingUser = await login(username, password);
-    res.json(existingUser);
-  } catch (err: any) {
-    res.status(500).send(err.message);
   }
 };

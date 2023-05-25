@@ -3,14 +3,9 @@ import redisClient from '../../config/cache';
 import api from '../../utils/axios';
 
 export const addFavorite = async (userId: string, quoteId: string) => {
-  // Check that userId and quoteId are not null or undefined
   if (!userId || !quoteId) {
     throw new Error('userId and quoteId must not be null or undefined');
   }
-
-  console.log('addFavorite userId', userId);
-  console.log('addFavorite quoteId', quoteId);
-
   try {
     const checkQuery =
       'SELECT * FROM user_favorites WHERE user_id = $1 AND quote_id = $2';
@@ -36,8 +31,6 @@ export const deleteFavorite = async (userId: string, quoteId: string) => {
       'DELETE FROM user_favorites WHERE user_id = $1 AND quote_id = $2',
       [userId, quoteId]
     );
-
-    console.log('deleteFavorite userId', userId, 'quoteId', quoteId);
   } catch (error) {
     console.error(
       `Could not delete favorite quote ${quoteId} for user ${userId}:`,
@@ -48,7 +41,6 @@ export const deleteFavorite = async (userId: string, quoteId: string) => {
 };
 
 export const getFavorites = async (userId: string) => {
-  console.log('getFavorites userId', userId);
   const { rows } = await pool.query(
     'SELECT quote_id FROM user_favorites WHERE user_id = $1',
     [userId]
