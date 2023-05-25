@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSearch } from '../hooks/useSearch';
-import { QuoteType } from '../models/Quote';
-import { useFavorites } from '../hooks/useFavorites';
 import { Favorites } from '../components/Favorites/Favorites';
 import { SearchForm } from '../components/Search/SearchForm';
 import { SearchResults } from '../components/Search/SearchResults';
 
 export const SearchQuotes: React.FC = () => {
     const { quotes, search } = useSearch();
-
     return (
         <div>
             <SearchForm search={search} />

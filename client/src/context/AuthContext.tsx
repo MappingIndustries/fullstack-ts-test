@@ -8,8 +8,11 @@ interface AuthContextProps {
 export const AuthContext = createContext<AuthContextProps>({
     userId: '',
 });
+interface ChildrenProp {
+    children?: React.ReactNode;
+}
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const AuthProvider: React.FC<ChildrenProp> = ({ children }) => {
     const [userId, setUserId] = useState('');
 
     useEffect(() => {

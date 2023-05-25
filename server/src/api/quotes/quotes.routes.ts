@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import * as QuotesController from './quotes.controller';
-import { authenticateToken } from '../../middlewares/authenticateToken';
 
 const router = Router();
 

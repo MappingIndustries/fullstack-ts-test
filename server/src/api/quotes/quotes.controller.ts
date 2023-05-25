@@ -25,9 +25,8 @@ export const getQuoteById = async (req: Request, res: Response) => {
 export const searchQuotes = async (req: Request, res: Response) => {
   const { query } = req.query;
 
-
   try {
-    if(!query || query == '') throw new Error('No query provided')
+    if (!query || query == '') throw new Error('No query provided');
     const quotes = await QuotesService.searchQuotes(query as string);
     res.json(quotes);
   } catch (err: any) {

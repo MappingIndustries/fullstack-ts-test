@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { FavoritesList } from './FavoritesList';
+import GenericMessage from '../UI/Messages/GenericMessage';
 
 export const Favorites: React.FC = () => {
     const { favorites } = useContext(FavoritesContext);
@@ -11,7 +12,7 @@ export const Favorites: React.FC = () => {
             {favorites.length > 0 ? (
                 <FavoritesList />
             ) : (
-                <p>You have no favorite quotes yet.</p>
+                <GenericMessage message='You have no favorites' />
             )}
         </div>
     );

@@ -1,19 +1,19 @@
 import React from 'react';
 import { QuoteType } from '../../models/Quote';
 import { useFavorites } from '../../hooks/useFavorites';
-import { NoResultsMessage } from '../../components/UI/Messages/NoResultsMessage';
+import GenericMessage from '../UI/Messages/GenericMessage';
 
 interface SearchResultsProps {
     quotes: QuoteType[];
 }
 
-export const SearchResults: React.FC = ({ quotes }: SearchResultsProps) => {
+export const SearchResults: React.FC<SearchResultsProps> = ({ quotes }) => {
     const { isFavorite, handleFavorite } = useFavorites();
 
     return (
         <>
             {quotes.length === 0 ? (
-                <NoResultsMessage />
+                <GenericMessage message="No results. Maybe try 'Home' or 'Divided'?" />
             ) : (
                 quotes && quotes.map((quote: QuoteType) => (
                     <div key={quote._id}>
